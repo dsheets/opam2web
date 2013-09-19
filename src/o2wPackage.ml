@@ -86,8 +86,8 @@ let get_info ~dates repo prefix pkg =
   let pkg_descr =
     let to_html md = Cow.Markdown.to_html (Cow.Markdown_github.of_string md) in
     <:html<
-      <h4>$to_html short_descr$</h4>
-      <p>$to_html long_descr$</p>
+      <p><b>$to_html short_descr$</b></p>
+      $to_html long_descr$
     >> in
   let pkg_url =
     let file = OpamPath.Repository.url repo prefix pkg in
