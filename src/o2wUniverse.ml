@@ -259,12 +259,14 @@ let to_html ~href_prefix ~content_dir ~sortby_links ~popularity ~active
           in
           <:html<
             <tr>
+              <td>
+               $str: pkg_info.pkg_name$
+              </td>
               <td title=$str:pkg_download$>
                <a href=$str:href_prefix^pkg_info.pkg_href$>
-                 $str: pkg_info.pkg_name$
+                 $str: pkg_info.pkg_version$
                </a>
               </td>
-              <td>$str: pkg_info.pkg_version$</td>
               <td>$str: pkg_info.pkg_synopsis$</td>
             </tr>
           >> :: acc)
