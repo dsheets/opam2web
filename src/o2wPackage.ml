@@ -162,7 +162,22 @@ let to_html ~href_prefix ~statistics universe pkg_info =
   let pkg_author = list "Author" (OpamFile.OPAM.author pkg_opam) in
   let pkg_maintainer = list "Maintainer" (OpamFile.OPAM.maintainer pkg_opam) in
   let pkg_license = list "License" (OpamFile.OPAM.license pkg_opam) in
-  let pkg_homepage = list "Homepage" (OpamFile.OPAM.homepage pkg_opam) in
+  let mk_url title url = <:html<
+    <a href=$str: url$ title=$str:title$>$str: url$</a>
+  >> in
+  let more_info name =
+    "More information about " ^ (OpamPackage.Name.to_string name) in
+  let pkg_homepage = match OpamFile.OPAM.homepage pkg_opam with
+    | [] -> <:html< >>
+    | [e] -> <:html<
+      <tr><th>Homepage</th><td>$mk_url (more_info name) e$</td></tr>
+    >>
+    | e::l -> let links = List.fold_left (fun p n ->
+      <:html< $p$, $mk_url (more_info name) n$>>
+    ) (mk_url (more_info name) e) l in
+    <:html<
+      <tr><th>Homepages</th><td>$links$</td></tr>
+    >> in
   let pkg_tags = list "Tag" (OpamFile.OPAM.tags pkg_opam) in
   let pkg_update = O2wMisc.string_of_timestamp pkg_info.pkg_update in
   (* XXX: need to add hyperlink on package names *)
@@ -271,7 +286,7 @@ let to_html ~href_prefix ~statistics universe pkg_info =
           <tbody>
             $mk_tr pkg_author$
             $mk_tr pkg_license$
-            $mk_tr pkg_homepage$
+            $pkg_homepage$
             $mk_tr pkg_tags$
             $mk_tr pkg_maintainer$
             $mk_tr pkg_depends$
