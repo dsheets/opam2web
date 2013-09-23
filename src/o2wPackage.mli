@@ -42,3 +42,8 @@ val href: ?href_prefix:string -> name -> version -> string
 
 (** Predicate to determine if DNF predicates are satisfied *)
 val are_preds_satisfied: universe_info -> package -> bool
+
+(** [repo_links universe package] is repository metadata file
+    corresponding to [package] in [universe].
+*)
+val repo_links: universe_info -> package -> OpamFile.Repo.t
