@@ -1,3 +1,7 @@
+body {
+  padding-bottom: 0px;
+}
+
 .contribute-element, .table td.btn-more {
   text-align: center;
 }
@@ -19,7 +23,7 @@
   clear: both;
   text-align: center;
   padding-top:20px;
-} 
+}
 
 .footer .copyright {
   clear: both;
